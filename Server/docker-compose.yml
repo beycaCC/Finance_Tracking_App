@@ -1,0 +1,16 @@
+services:
+  moneytracker-postgres:
+    image: postgres:17
+    container_name: moneytracker-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: moneytracker
+      POSTGRES_PASSWORD: moneytracker123
+      POSTGRES_DB: moneytrackerdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - moneytracker-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  moneytracker-postgres-data:
