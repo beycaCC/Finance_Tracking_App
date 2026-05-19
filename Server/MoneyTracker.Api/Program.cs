@@ -2,6 +2,10 @@
 
 using Microsoft.EntityFrameworkCore;
 using MoneyTracker.Infrastructure.Persistence;
+using MoneyTracker.Infrastructure.Extensions;
+using AutoMapper;
+using MoneyTracker.Application.Dtos.Categories;
+using MoneyTracker.Application.Dtos.Accounts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MoneyTrackerDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Register infrastructure services (repositories, etc.)
+builder.Services.AddInfrastructure();
+
+// Configure AutoMapper manually (avoid dependency on AddAutoMapper extension)
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new CategoryProfile());
+    mc.AddProfile(new AccountProfile());
+});
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 // Default Dependency Injections
 builder.Services.AddControllers();

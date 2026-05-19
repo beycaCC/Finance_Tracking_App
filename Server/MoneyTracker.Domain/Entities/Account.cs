@@ -1,5 +1,4 @@
 ﻿using MoneyTracker.Domain.Enum;
-using MoneyTracker.Domain.Enums;
 
 namespace MoneyTracker.Domain.Entities;
 
@@ -16,6 +15,6 @@ public class Account
     public Guid CategoryId { get; set; }
 
     // navigation property
-    public ICollection<Transactrion> Transactions { get; set; } = new List<Transactrion>();
+    public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     public Category Category { get; set; }
 }

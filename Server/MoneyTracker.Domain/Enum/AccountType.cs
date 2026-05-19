@@ -1,4 +1,4 @@
-﻿namespace MoneyTracker.Domain.Enums;
+﻿namespace MoneyTracker.Domain.Enum;
 
 public enum AccountType
 {

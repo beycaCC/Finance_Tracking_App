@@ -2,7 +2,7 @@
 
 namespace MoneyTracker.Domain.Entities;
 
-public class Transactrion
+public class Transaction
 {
     public Guid Id { get; set; }
     public required string Receiver { get; set; }
