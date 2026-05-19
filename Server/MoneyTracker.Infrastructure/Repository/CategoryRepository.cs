@@ -24,10 +24,10 @@ internal class CategoryRepository(MoneyTrackerDbContext dbContext) : ICategoryRe
         return await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public Task UpdateCategoryAsync(Category category)
+    public async Task UpdateCategoryAsync(Category category)
     {
-        // TODO
-        throw new NotImplementedException();
+        dbContext.Categories.Update(category);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteCategoryAsync(Category category)

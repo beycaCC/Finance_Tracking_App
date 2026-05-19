@@ -46,4 +46,38 @@ public class CategoryController(ICategoryRepository repository,
             new { id = newId }
         );
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] UpdateCategoryDto updateCategoryDto)
+    {
+        if (updateCategoryDto == null)
+        {
+            return BadRequest();
+        }
+
+        var existing = await repository.GetCategoryByIdAsync(id);
+        if (existing == null)
+        {
+            return NotFound();
+        }
+
+        // Map the incoming DTO onto the existing entity and persist changes
+        mapper.Map(updateCategoryDto, existing);
+        await repository.UpdateCategoryAsync(existing);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCategory(Guid id)
+    {
+        var existing = await repository.GetCategoryByIdAsync(id);
+        if (existing == null)
+        {
+            return NotFound();
+        }
+        await repository.DeleteCategoryAsync(existing);
+        return NoContent();
+    }
+
 }
